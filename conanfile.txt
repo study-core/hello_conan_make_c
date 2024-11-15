@@ -1,0 +1,7 @@
+[requires]
+# 项目所依赖的外部库
+zlib/1.2.11
+
+[generators]
+# 构建工具配置, make 就写 makefile(但是在 Conan 2.x 中改写成了 MakeDeps); CMake 就写 cmake
+MakeDeps

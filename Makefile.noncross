@@ -1,0 +1,25 @@
+# 使用 gcc 作为编译器
+CC = gcc
+CFLAGS = -Wall -g
+LDFLAGS = -L$(CONAN_LIB_DIR) -lz
+INCLUDES = -I$(CONAN_INCLUDE_DIR)
+
+# Conan 安装的依赖路径
+CONAN_INCLUDE_DIR = $(shell conan info . --paths | grep "include" | cut -d' ' -f2)
+CONAN_LIB_DIR = $(shell conan info . --paths | grep "lib" | cut -d' ' -f2)
+
+# 目标文件
+TARGET = my_c_project
+SRCS = main.c
+OBJS = $(SRCS:.c=.o)
+
+# 默认目标
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJS)
+
